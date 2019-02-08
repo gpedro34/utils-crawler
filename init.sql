@@ -1,0 +1,36 @@
+use brs_crawler;
+
+-- checks table
+CREATE TABLE IF NOT EXISTS checks (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  peer_id INT UNSIGNED NOT NULL,
+	blocked SMALLINT UNSIGNED DEFAULT 0 NOT NULL,
+	ip VARCHAR(45) NULL,
+	city VARCHAR(45) NULL,
+	country VARCHAR(5) NULL,
+	region VARCHAR(45) NULL,
+  lat FLOAT(7,4) NULL,
+  lon FLOAT(7,4) NULL,
+  ssl_id INT UNSIGNED NULL,
+	last_scanned TIMESTAMP DEFAULT CURRENT_TIMESTAMP() NOT NULL,
+  CONSTRAINT checks_pk PRIMARY KEY (id)
+)
+AUTO_INCREMENT=1
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_general_ci;
+
+-- ssl_checks table
+CREATE TABLE IF NOT EXISTS ssl_checks (
+	ssl_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  peer_id INT UNSIGNED NOT NULL,
+  ssl_status INT UNSIGNED NULL,
+  ssl_from TIMESTAMP NULL,
+  ssl_to TIMESTAMP NULL,
+  ssl_remaining_days FLOAT(7,0) NULL,
+  CONSTRAINT ssl_checks_pk PRIMARY KEY (ssl_id)
+)
+AUTO_INCREMENT=1
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_general_ci;
