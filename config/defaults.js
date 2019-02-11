@@ -1,7 +1,7 @@
 'use strict';
 
 exports.app = {
-	"recheckInterval": 10,					// in minutes
+	"recheckInterval": 30,					// in minutes
   "workers": 1,                // default 5
 }
 // MariaDB connection configuration
@@ -9,8 +9,8 @@ exports.mariadb = {
 	"host": "localhost",
 	"port": 3306,
 	"name": "brs_crawler",
-	"user": "brs_crawler",
-	"pass": "brs_crawler"
+	"user": "utils_crawler",
+	"pass": "utils_crawler"
 };
 // BRS related Configurations
 exports.brs = {

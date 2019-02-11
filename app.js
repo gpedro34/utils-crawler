@@ -2,43 +2,47 @@
 
 const assert = require('assert');
 const cluster = require('cluster');
+
 const exit = require('exit');
 
+const chalk = require('chalk');
+
 const defaults = require('./config/defaults');
-
-assert(cluster.isMaster);
-console.log(`Master (${process.pid}) is booting...`);
-
 const WORKERS = process.env.WORKERS || defaults.app.workers;
 
+// Master (controller for the workers)
+assert(cluster.isMaster);
+console.log(chalk.bold.black.bgYellow(`Master with PID ${process.pid} is booting...`));
 process.on('SIGINT', () => {
-	console.log(`Master (${process.pid}) exiting...`);
+	console.log(chalk.bold.black.bgYellow(`Master with PID ${process.pid} exiting!`));
 	cluster.disconnect(() => {
-		console.log(`Master Closed`);
+		console.log(chalk.bold.black.bgYellow(`Master with PID ${process.pid} exited!`));
     exit(0)
 	});
 });
+console.log(chalk.bold.black.bgYellow(`Master with PID ${process.pid} is up and running!`));
 
+// Launches setup worker for the cluster
 cluster.setupMaster({exec: 'worker.js'});
-cluster.on('exit', (worker, code, signal) => {
-	if(code === 0 && signal === null){
-		console.log(`Relaunching worker (${worker.process.pid})`)
+let workersOn = 1;
+console.log(chalk.bold.black.bgGreen(`Launching workers...`));
+cluster.fork();
+const int = setInterval(()=>{
+	if(workersOn < WORKERS){
+		workersOn++;
+		// console.log(chalk.underline.bold.black.bgGreen(`Launching worker (${workersOn}/${WORKERS})...`));
 		cluster.fork();
+	}
+}, 100);
+cluster.on('exit', (worker, code, signal) => {
+	// console.log(`signal: ${signal}`)
+	if(code === 0 && signal === null){
+		console.log(chalk.bold.black.bgGreen(`Worker with PID ${worker.process.pid} finished his work. Respawning...`));
+		workersOn--;
+	} else if(code === 1 && signal === null){
+		console.log(chalk.bold.white.bgRed(`Something went wrong... Worker with PID ${worker.process.pid} exited. Respawning...`));
+		workersOn--;
 	} else {
-		console.log(`Worker (${worker.process.pid}) exited (${code}/${signal})`);
+		console.error(chalk.bold.black.bgGrey(`Worker with PID ${worker.process.pid} exited (${code}/${signal})!`));
 	}
 });
-let i = 0;
-const int = setInterval(()=>{
-	if(i < WORKERS-1){
-		console.log('Launching worker '+i);
-		cluster.fork();
-		i++;
-	} else {
-		console.log('Landed here!')
-		clearInterval(int);
-	}
-}, 10000)
-cluster.fork();
-
-console.log(`Master (${process.pid}) up and running`);

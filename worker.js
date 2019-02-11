@@ -1,28 +1,20 @@
 'use strict';
 
-const utils = require('./lib/utils');
-const dbFunc = require('./lib/db');
+const exit = require('exit');
+const chalk = require('chalk');
 
+const utils = require('./lib/utils');
+// Defaults
 const defaults = require('./config/defaults');
 const RECHECK_INTERVAL = process.env.RECHECK_INTERVAL || defaults.app.recheckInterval;
+// DB connection
+const checks = require('./lib/db/connection').checks;
 
-const db = require('mysql2/promise').createPool({
-	host: process.env.DB_HOST || defaults.mariadb.host,
-	port: process.env.DB_PORT || defaults.mariadb.port,
-	user: process.env.DB_USER || defaults.mariadb.user,
-	password: process.env.DB_PASS || utils.readFileTrim(__dirname + '/.db.passwd') || defaults.mariadb.pass,
-	database: process.env.DB_NAME || defaults.mariadb.name,
-	connectionLimit: 3,
-	//supportBigNumbers: true,
-});
-const checks = new dbFunc(db);
-
-let a = 0;
-const scanLoop = setInterval(async () => {
-	await checks.listTodo(RECHECK_INTERVAL, a);
-  a++;
-}, 3000);
-
+// Fire work
+(async()=>{
+	console.log(chalk.bold.black.bgGreen(`Worker with PID ${process.pid} sucessfully booted!`));
+	await checks.listTodo(RECHECK_INTERVAL);
+})();
 
 // Resolve domain and checks SSL
 const domainCheck = async (domain) => {

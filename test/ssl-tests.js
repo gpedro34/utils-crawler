@@ -16,7 +16,6 @@
 const expect = require('chai').expect;
 
 const ssl = require('./../lib/ssl');
-const brs = require('./../lib/brs');
 const def = require('./../config/defaults').tests.ssl;
 
 describe('SSL', ()=>{

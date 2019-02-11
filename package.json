@@ -27,6 +27,7 @@
     "exit": "^0.1.2",
     "fs": "0.0.1-security",
     "iplocation": "^6.1.0",
+    "lookup-dns-cache": "^2.1.0",
     "mysql2": "^1.6.4",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5",
