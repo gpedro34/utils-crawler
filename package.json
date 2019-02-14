@@ -16,7 +16,10 @@
     "ssl"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "test": "mocha --timeout 120000",
+    "cover": "nyc mocha --timeout 120000",
+    "coverage-report": "nyc mocha --timeout 120000 && nyc report --reporter=html && start ./coverage/index.html"
   },
   "author": "gpedro",
   "license": "GPL-3.0-or-later",
@@ -35,6 +38,8 @@
     "ssl-checker": "^1.2.1"
   },
   "devDependencies": {
-    "chai": "^4.2.0"
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "nyc": "^13.2.0"
   }
 }

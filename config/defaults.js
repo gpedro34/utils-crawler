@@ -26,11 +26,12 @@ exports.brs = {
 exports.tests = {
   "brs":{
     "publicWallet": "localhost:8125",
+    "publicWalletWithSSL": "wallet1.burstforum.net:2083",
     "p2pWallet": "wallet.burst-alliance.org:8123"
   },
   "location":{
     "IPv4ToTest": "75.100.126.227",
-    "IPv6ToTest": "[2001:19f0:4400:432c:5400:1ff:fe35:2641]"
+    "IPv6ToTest": "[2a01:4f8:160:1012:0:0:0:2]"
   },
   "ssl":{
 		"valid": "https://wallet.burst-alliance.org",
@@ -39,6 +40,10 @@ exports.tests = {
 		"invalid": "wp12278930.mail.server-he.de",
 		"notFound": "aaaa.com",
 		"expired": "expired.badssl.com",
-  }
-
+  },
+	"utils": {
+		"domain": "wallet.burst-alliance.org:8125",
+		"IPv4": "75.100.126.227:8125",
+		"IPv6": "[2001:19f0:4400:432c:5400:1ff:fe35:2641]:8125"
+	}
 }
