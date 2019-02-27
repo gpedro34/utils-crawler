@@ -1,8 +1,10 @@
 'use strict';
 
 exports.app = {
-	"recheckInterval": 30,					// in minutes
-  "workers": 1,                // default 5
+	"recheckInterval": 60,						// in minutes
+  "workers": 100,	                	// Will fire up to this many workers. Default: 100
+	"refreshTime": 700,								// time between checks for workers in ms. Default: 1000 ms
+	"workerTime": 700									// time a up-to-date worker takes in ms. Default: 700 ms
 }
 // MariaDB connection configuration
 exports.mariadb = {
@@ -21,6 +23,13 @@ exports.brs = {
   "userAgent": 'BRS/9.9.9',
   "peerPort": 8123,   // Default peer port (default 8123)
   "apiPort": 8125     // Default api port (default 8125)
+}
+
+exports.locationProviders = {
+	// leave "" if no API key
+	"ipstack": "1e6413ffc498da144fcb700053cdcd43",
+	"ipify": "at_gECZ6Iyrz216kJ2PZlknIHLnHJLGM",
+	"ipgeolocation": "c7af257b02124170bb52c6834f449bd9"
 }
 
 exports.tests = {
