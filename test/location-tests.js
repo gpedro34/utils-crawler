@@ -5,7 +5,7 @@ const expect = require('chai').expect;
 const locate = require('./../lib/location').locate;
 const def = require('./../config/defaults').tests.location;
 
-describe('Location Check', ()=>{
+describe('Location Check Tests', ()=>{
   describe('Locate', ()=>{
     it('IPv4', async ()=>{
       const data = await locate(def.IPv4ToTest);

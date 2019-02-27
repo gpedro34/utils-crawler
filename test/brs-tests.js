@@ -5,7 +5,7 @@ const expect = require('chai').expect;
 const brs = require('./../lib/brs');
 const def = require('./../config/defaults').tests.brs;
 
-describe('BRS', ()=>{
+describe('BRS Tests', ()=>{
   describe('API checks', ()=>{
     it('getTime', async ()=>{
       const data = await brs.callBRS(def.publicWallet, brs.BRS_API_REQUESTS.TIME);
@@ -33,7 +33,7 @@ describe('BRS', ()=>{
     });
   });
   describe('Normalized peer URLs for API calls', ()=>{
-    describe('Not add API path', ()=>{
+    describe("Don't add API path", ()=>{
       it("host:8125", async()=>{
         const data = await brs.normalizeAPI('localhost:8125', true);
         expect(data).to.equal('localhost:8125');

@@ -18,7 +18,7 @@ const expect = require('chai').expect;
 const ssl = require('./../lib/ssl');
 const def = require('./../config/defaults').tests.ssl;
 
-describe('SSL Check', ()=>{
+describe('SSL Check Tests', ()=>{
   describe('Test', ()=>{
     it('Verify SSL', async ()=>{
       const data = await ssl.checkSSL('google.com');
