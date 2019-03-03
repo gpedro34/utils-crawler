@@ -4,6 +4,7 @@ const exit = require('exit');
 const chalk = require('chalk');
 
 const utils = require('./lib/utils');
+const logger = require('./logging/logger');
 // Defaults
 const defaults = require('./config/defaults');
 const RECHECK_INTERVAL = process.env.RECHECK_INTERVAL || defaults.app.recheckInterval;
@@ -12,7 +13,7 @@ const checks = require('./lib/db/connection').checks;
 
 // Fire work
 (async()=>{
-	console.log(chalk.bold.black.bgGreen(`Worker with PID ${process.pid} sucessfully booted!`));
+	logger.info(`${process.pid} => Sucessfully booted!`);
 	await checks.listTodo(RECHECK_INTERVAL);
 })();
 
@@ -46,8 +47,8 @@ const domainCheck = async (domain) => {
     try{
       resLoc = await location.locate(domain);
     } catch(err){
-      console.log('Something went wrong. Report Exception 50 at https://github.com/gpedro34/BURST-NetX/issues/new?assignees=&labels=&template=bug_report.md&title=');
-      console.log(err)
+      logger.info('Something went wrong. Report Exception 50 at https://github.com/gpedro34/BURST-NetX/issues/new?assignees=&labels=&template=bug_report.md&title=');
+      logger.info(err)
     }
     if(!resSSL || resSSL.error){
       // Invalid SSL
