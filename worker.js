@@ -4,7 +4,7 @@ const exit = require('exit');
 const chalk = require('chalk');
 
 const utils = require('./lib/utils');
-const logger = require('./logging/logger');
+const logger = require('./lib/logger/logger');
 // Defaults
 const defaults = require('./config/defaults');
 const RECHECK_INTERVAL = process.env.RECHECK_INTERVAL || defaults.app.recheckInterval;
