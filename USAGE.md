@@ -1,7 +1,7 @@
 # ENV variables
 - WORKERS
 - RECHECK_INTERVAL  // In minutes
-- WORKER_TIME       // In ms
+- UPD_RECHECK_TIME       // In minutes
 - REFRESH_TIME       // In ms
 - DB_HOST
 - DB_PORT
