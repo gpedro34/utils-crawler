@@ -1,14 +1,20 @@
 'use strict';
 
 exports.app = {
-	// Will fire this many workers when needed. Default: 100
-	"workers": 5,
-	// time between checks for workers in ms. Default: 250 ms
+	// Will fire up to this many workers if needed. Default: 50
+	"workers": 50,
+	// time between helpers spawning (in ms). Default: 500 ms
+	"spawnCooldown": 500,
+	// max time to let an errored record to be in DB (in minutes). Default: 5 min
+	"errorDetectionCooldown": 5,
+	// time between rechecking a blocked peer (in hours). Default: 24 hours
+	"blockedPeersCooldown": 24,
+	// time between checks for downed workers (in ms). Default: 250 ms
 	"refreshTime": 250,
-	// time between up-to-date confirmation to console. Default: 60 minutes
-	"updRecheckTime": 1,
-	// time between rechecks in minutes. Default: 60 minutes
-	"recheckInterval": 180,
+	// up-to-date confirmation cooldown (in seconds). Default: 30 sec
+	"updRecheckTime": 30,
+	// time between information re-check (in hours). Default: 12 hours
+	"recheckInterval": 1
 }
 // MariaDB connection configuration
 exports.mariadb = {
@@ -28,27 +34,35 @@ exports.brs = {
   "peerPort": 8123,   // Default peer port (default 8123)
   "apiPort": 8125     // Default api port (default 8125)
 }
-
+// IP Location Providers related Configurations
 exports.locationProviders = {
+	"blacklistCooldown": 10,	// Default: 10 minutes
 /* Defaults:
 		db-ip.com (free key) 		- up to 1000 API calls/day (may fail a lot of times)
 		ipapi.co (without key)  - up to 1000 API calls/day (may fail a lot of times)
 	 	ipdata.co (without key) - very few per hour
 	 	ipinfo.io (without key) - very few per hour */
-	// leave "" if no API key
+	// leave an empty array ([]) if no API key
 	// 1500 calls/day:
-	"ipgeolocation": "c7af257b02124170bb52c6834f449bd9", // good
-	"ipdata": "6359909662a18444d488089677b26756feb90c9ebaa0f0cbd452e39b", // best one
+		//best one
+	"ipdata": [],
+		//good
+	"ipgeolocation": [
+		"c7af257b02124170bb52c6834f449bd9"
+	],
 	// 1000 calls/day:
-	"ipinfo": "8d963a71f723e9", // very good
+		// very good
+	"ipinfo": [
+		"8d963a71f723e9"
+	],
 	// 1000 calls/month:
-	"ipify": "at_gECZ6Iyrz216kJ2PZlknIHLnHJLGM", // incomplete intel and not many calls in free mode
+	"ipify": [], // incomplete intel and not many calls in free mode
 	// 10000 calls/month:
-	"ipstack": "1e6413ffc498da144fcb700053cdcd43", // very few api calls in free mode
+	"ipstack": [], // very few api calls in free mode
 	// Paid plan
-	"dbip": "" // not tested with real API key but should work
+	"dbip": [], // not tested with real API key but should work
 }
-
+// Tests related Configurations
 exports.tests = {
   "brs":{
     "publicWallet": "localhost:8125",
@@ -73,11 +87,10 @@ exports.tests = {
 		"IPv6": "[2001:19f0:4400:432c:5400:1ff:fe35:2641]:8125"
 	}
 }
-
 // Logging to file configurations
 exports.logger = {
   // Refer to https://www.npmjs.com/package/rotating-file-stream
-  "log": true,             	// true to log to ./server/logging/logs/ folder
+  "log": true,             	// true to log to ./data/logs/ folder
   "interval": false,         // Use s,m,h,d,M for time units - (false to disable)
   "size": '100K',           // Use B,K,M,G for size units (Single file) - (false to disable)
   "compress": false,        // true/false for gzip compression
