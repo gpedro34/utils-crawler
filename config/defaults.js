@@ -2,7 +2,7 @@
 
 exports.app = {
 	// Will fire up to this many workers if needed. Default: 50
-	"workers": 5,
+	"workers": 50,
 	// time between helpers spawning (in ms). Default: 500 ms
 	"spawnCooldown": 500,
 	// max time to let an errored record to be in DB (in minutes). Default: 5 min
