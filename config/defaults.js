@@ -61,7 +61,7 @@ exports.locationProviders = {
 // Tests related Configurations
 exports.tests = {
 	brs: {
-		publicWallet: 'wallet1.burstforum.net:2083',
+		publicWallet: 'wallet.starburst.pink:8125',
 		publicWalletWithSSL: 'wallet1.burstforum.net:2083',
 		p2pWallet: 'wallet.burst-alliance.org:8123'
 	},
