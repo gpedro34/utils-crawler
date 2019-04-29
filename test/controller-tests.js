@@ -19,8 +19,8 @@ describe('Flow Tests', () => {
 				// Data
 				expect(data.isPublicAPI).to.equal(false);
 			});
-			it('Valid (using localhost)', async () => {
-				const data = await control.walletAPICheck('localhost:8125');
+			it('Valid', async () => {
+				const data = await control.walletAPICheck('wallet.starburst.pink:8125');
 				// Object
 				expect(data).to.have.property('isPublicAPI');
 				expect(data).to.have.property('apiPort');
