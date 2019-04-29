@@ -9,7 +9,7 @@ const def = require('./../config/defaults').tests.location;
 
 describe('Location Check Tests', () => {
 	describe('Locate', () => {
-		it('IPv4', async () => {
+		it.skip('IPv4', async () => {
 			const data = await locate(def.IPv4ToTest);
 			expect(data).to.have.property('ip');
 			expect(data).to.have.property('city');
@@ -18,7 +18,7 @@ describe('Location Check Tests', () => {
 			expect(data).to.have.property('lat');
 			expect(data).to.have.property('long');
 		});
-		it('IPV6', async () => {
+		it.skip('IPV6', async () => {
 			const data = await locate(def.IPv6ToTest);
 			expect(data).to.have.property('ip');
 			expect(data).to.have.property('city');
