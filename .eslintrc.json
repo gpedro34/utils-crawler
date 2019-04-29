@@ -70,7 +70,7 @@
 				"requireForBlockBody": false
 			}
 		],
-		"arrow-body-style": ["warn", "as-needed"],
+		"arrow-body-style": ["warn", "always"],
 
 		"strict": ["error", "global"],
 		"no-var": "error",
