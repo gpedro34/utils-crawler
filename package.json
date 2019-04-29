@@ -21,7 +21,7 @@
     "cover": "nyc mocha test/tests.js --timeout 120000",
     "coverage-report": "nyc mocha test/tests.js --timeout 120000 && nyc report --reporter=html && start ./coverage/index.html"
   },
-  "author": "gpedro",
+  "author": "gpedro34",
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "assert": "^1.4.1",
@@ -41,6 +41,10 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
-    "nyc": "^13.3.0"
+    "nyc": "^13.3.0",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.2.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "prettier": "^1.17.0"
   }
 }

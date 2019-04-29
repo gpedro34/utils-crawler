@@ -1,0 +1,14 @@
+/node_modules
+/coverage
+/.nyc*
+/data
+LICENSE
+
+*.md
+*.log
+*.txt
+*.key
+*.sql
+*.html
+*.css
+*.png
