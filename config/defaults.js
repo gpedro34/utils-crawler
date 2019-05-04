@@ -22,7 +22,8 @@ exports.mariadb = {
 	port: 3306,
 	name: 'brs_crawler',
 	user: 'utils_crawler',
-	pass: 'utils_crawler'
+	pass: 'utils_crawler',
+	retries: 20
 };
 // BRS related Configurations
 exports.brs = {
