@@ -8,7 +8,9 @@ const logger = require('./lib/logger/logger');
 const defaults = require('./config/defaults');
 const WORKERS = process.env.WORKERS || defaults.app.workers;
 const REFRESH_TIME = process.env.REFRESH_TIME || defaults.app.refreshTime;
-const UPD_RECHECK_TIME = 29250/30*process.env.UPD_RECHECK_TIME || 29250/30*defaults.app.updRecheckTime;
+const UPD_RECHECK_TIME =
+	(29250 / 30) * process.env.UPD_RECHECK_TIME ||
+	(29250 / 30) * defaults.app.updRecheckTime;
 const SPAWN_COOLDOWN = process.env.SPAWN_COOLDOWN || defaults.app.spawnCooldown;
 
 // Master (controller for the workers)
@@ -19,7 +21,7 @@ process.on('SIGINT', () => {
 	clearInterval(int);
 	cluster.disconnect(() => {
 		logger.info(`Master (${process.pid}) exited!`);
-    exit(0);
+		exit(0);
 	});
 });
 logger.info(`Master (${process.pid}) up and running!`);
@@ -29,15 +31,13 @@ const STATES = {
 	UPD: 'up to date',
 	UPDATE: 'updating',
 	UPDATE_SPAWN: 'spawning helpers'
-}
-let controller = {
+};
+const controller = {
 	state: STATES.UPD
-}
+};
 cluster.setupMaster({
 	exec: 'worker.js',
- 	args:[
-		"--env.RECHECK_INTERVAL=", process.env.RECHECK_INTERVAL
-	]
+	args: ['--env.RECHECK_INTERVAL=', process.env.RECHECK_INTERVAL]
 });
 let workersOn = 1;
 logger.info(`Launching workers...`);
@@ -48,10 +48,21 @@ let updInt;
 // Handles closing of workers
 cluster.on('exit', (worker, code, signal) => {
 	// Worker controller refresher
-	if(code !== 200 && code !== 210 && code !== 220 && code !== 230 && code !== 240 && code !== 1) {
-		logger.info(`${worker.process.pid} => Something went wrong... Code:${code} / Signal:${signal}`);
+	if (
+		code !== 200 &&
+		code !== 210 &&
+		code !== 220 &&
+		code !== 230 &&
+		code !== 240 &&
+		code !== 1
+	) {
+		logger.info(
+			`${
+				worker.process.pid
+			} => Something went wrong... Code:${code} / Signal:${signal}`
+		);
 	}
-	switch(code){
+	switch (code) {
 		case 210:
 			logger.info(`${worker.process.pid} => Peer updated!`);
 			break;
@@ -68,14 +79,13 @@ cluster.on('exit', (worker, code, signal) => {
 			logger.info(`${worker.process.pid} => Up to date!`);
 			break;
 	}
-	let controlInt;
-	switch(code){
+	switch (code) {
 		case 210:
 		case 220:
 		case 230:
 		case 240:
-			if(controller.state !== STATES.UPDATE_SPAWN){
-				if(controller.state === STATES.UPD){
+			if (controller.state !== STATES.UPDATE_SPAWN) {
+				if (controller.state === STATES.UPD) {
 					firstTime = true;
 				}
 				controller.state = STATES.UPDATE;
@@ -83,9 +93,9 @@ cluster.on('exit', (worker, code, signal) => {
 			break;
 		case 200:
 			controller.state = STATES.UPD;
-			if(!updInt || updInt._idleTimeout < 0){
-				updInt = setInterval(()=>{
-					if(controller.state === STATES.UPD){
+			if (!updInt || updInt._idleTimeout < 0) {
+				updInt = setInterval(() => {
+					if (controller.state === STATES.UPD) {
 						controller.state = STATES.UPDATE;
 					}
 					firstTime = true;
@@ -97,31 +107,36 @@ cluster.on('exit', (worker, code, signal) => {
 });
 
 // Worker spawning
-const int = setInterval(()=>{
+const int = setInterval(() => {
 	// logger.info(`State: ${controller.state}`);
 	// logger.info(`firstTime: ${firstTime}`);
-	if(controller.state === STATES.UPDATE){
+	if (controller.state === STATES.UPDATE) {
 		if (workersOn === 0 || firstTime) {
-			if(workersOn === 0){
+			if (workersOn === 0) {
 				// logger.info(`Workers: ${workersOn}`);
 				// Respawn main worker
 				// logger.info('Respawning main worker...');
 				cluster.fork();
 				workersOn++;
 			}
-			setTimeout(()=>{firstTime = false;},REFRESH_TIME)
-		} else if(WORKERS - workersOn > 0 && !firstTime){
+			setTimeout(() => {
+				firstTime = false;
+			}, REFRESH_TIME);
+		} else if (WORKERS - workersOn > 0 && !firstTime) {
 			// logger.info(`Workers: ${workersOn}`);
 			controller.state = STATES.UPDATE_SPAWN;
 			// Spawn worker helpers when there is work to be done
-			const spawnInt = setInterval(()=>{
-				if(WORKERS - workersOn > 0 && controller.state === STATES.UPDATE_SPAWN){
+			const spawnInt = setInterval(() => {
+				if (
+					WORKERS - workersOn > 0 &&
+					controller.state === STATES.UPDATE_SPAWN
+				) {
 					// logger.info(`Spawning helper(${workersOn+1})...`);
 					cluster.fork();
 					workersOn++;
 				} else {
 					controller.state = STATES.UPD;
-					clearInterval(spawnInt)
+					clearInterval(spawnInt);
 				}
 			}, SPAWN_COOLDOWN);
 		}

@@ -94,7 +94,8 @@
 		],
 		"no-class-assign": "error",
 		"no-dupe-class-members": "error",
-		"no-unsafe-finally": "error",
+		"no-fallthrough": "off",
+		"no-unsafe-finally": "off",
 		"no-duplicate-imports": [
 			"error",
 			{
