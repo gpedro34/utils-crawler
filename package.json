@@ -19,7 +19,9 @@
     "start": "node app.js",
     "test": "mocha test/tests.js --timeout 120000",
     "cover": "nyc mocha test/tests.js --timeout 120000",
-    "coverage-report": "nyc mocha test/tests.js --timeout 120000 && nyc report --reporter=html && start ./coverage/index.html"
+    "coverage-report": "nyc mocha test/tests.js --timeout 120000 && nyc report --reporter=html && start ./coverage/index.html",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "author": "gpedro34",
   "license": "GPL-3.0-or-later",
@@ -36,7 +38,8 @@
     "request-promise-native": "^1.0.5",
     "rotating-file-stream": "^1.4.0",
     "ssl-checker": "^1.2.1",
-    "winston": "^3.2.1"
+    "winston": "^3.2.1",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
@@ -46,5 +49,6 @@
     "eslint-config-prettier": "^4.2.0",
     "eslint-plugin-prettier": "^3.0.1",
     "prettier": "^1.17.0"
-  }
+  },
+  "snyk": true
 }
