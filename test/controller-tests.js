@@ -11,7 +11,7 @@ describe('Flow Tests', () => {
 		describe('With Port', () => {
 			it('Invalid', async () => {
 				const data = await control.walletAPICheck(
-					'wallet.burst-alliance.org:8125'
+					'wallet1.burstforum.net:2083'
 				);
 				// Object
 				expect(data).to.have.property('isPublicAPI');
