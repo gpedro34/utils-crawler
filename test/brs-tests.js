@@ -9,7 +9,7 @@ const def = require('./../config/defaults').tests.brs;
 
 describe('BRS Tests', () => {
 	describe('API checks', () => {
-		it('getTime', async () => {
+		it.skip('getTime', async () => {
 			const data = await brs.callBRS(
 				def.publicWallet,
 				brs.BRS_API_REQUESTS.TIME
