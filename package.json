@@ -30,7 +30,7 @@
     "cluster": "^0.7.7",
     "exit": "^0.1.2",
     "fs": "0.0.1-security",
-    "iplocation": "^6.1.0",
+    "iplocation": "^7.0.0",
     "lookup-dns-cache": "^2.1.0",
     "mysql2": "^1.6.4",
     "path": "^0.12.7",
